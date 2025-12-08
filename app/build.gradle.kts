@@ -1,8 +1,8 @@
 plugins {
     id("com.android.application") version "8.13.1"
-    id("org.jetbrains.kotlin.android") version "1.9.21"
+    id("org.jetbrains.kotlin.android") version "1.9.0"
     id("com.google.dagger.hilt.android") version "2.48"
-    kotlin("kapt") version "1.9.21"
+    kotlin("kapt") version "1.9.0"
     id("com.google.gms.google-services") version "4.4.1"
 }
 
@@ -49,7 +49,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.1" // Compatible with Kotlin 1.9.0
     }
 
     packaging {
@@ -57,6 +57,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
     androidResources {
         noCompress += listOf("tflite")
     }
@@ -124,4 +125,5 @@ dependencies {
 kapt {
     correctErrorTypes = true
 }
+
 

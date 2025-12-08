@@ -8,6 +8,7 @@
         android:minSdkVersion="26"
         android:targetSdkVersion="34" />
 
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -15,6 +16,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <!-- AR and GPU Features -->
     <uses-feature
         android:name="android.hardware.camera.ar"
         android:required="true" />
@@ -49,16 +51,18 @@
         android:debuggable="true"
         android:extractNativeLibs="false"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@android:drawable/sym_def_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/Theme.IndoorNavigation" >
+
+        <!-- ARCore Requirement -->
         <meta-data
             android:name="com.google.ar.core"
             android:value="required" />
 
+        <!-- Main Activity -->
         <activity
             android:name="com.example.indoornavigation.ui.MainActivity"
             android:exported="true"
@@ -71,6 +75,7 @@
             </intent-filter>
         </activity>
 
+        <!-- Navigation Service -->
         <service
             android:name="com.example.indoornavigation.service.NavigationService"
             android:exported="false"
