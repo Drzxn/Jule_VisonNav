@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IndoorNavigation</string>
+    <string name="gcm_defaultSenderId" translatable="false">1234567890</string>
+    <string name="google_api_key" translatable="false">your_api_key_here</string>
+    <string name="google_app_id" translatable="false">1:1234567890:android:1234567890abcdef</string>
+    <string name="google_crash_reporting_api_key" translatable="false">your_api_key_here</string>
+    <string name="google_storage_bucket" translatable="false">indoornavigation-placeholder.appspot.com</string>
+    <string name="project_id" translatable="false">indoornavigation-placeholder</string>
+    <style name="Theme.IndoorNavigation" parent="android:Theme.Material.Light.NoActionBar"/>
+</resources>
