@@ -4,7 +4,7 @@
             "outputFile": "com.example.indoornavigation.app-mergeDebugResources-78:/values-b+es+419/values-b+es+419.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\darsh\\.gradle\\caches\\8.13\\transforms\\7b4e5cf40783a81ad27df2d46f683b01\\transformed\\material-1.11.0\\res\\values-b+es+419\\values-b+es+419.xml",
+                    "source": "C:\\Users\\darsh\\.gradle\\caches\\8.13\\transforms\\97b70cb4cb5f0edd945a7f70d73cfc2d\\transformed\\material-1.11.0\\res\\values-b+es+419\\values-b+es+419.xml",
                     "from": {
                         "startLines": "2,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\darsh\\.gradle\\caches\\8.13\\transforms\\5c34f3d9250826fc0dba1ac2cbfb67a6\\transformed\\core-1.40.0\\res\\values-b+es+419\\values.xml",
+                    "source": "C:\\Users\\darsh\\.gradle\\caches\\8.13\\transforms\\8b76ad2e2400c13a83cda9f2a79a09f5\\transformed\\core-1.40.0\\res\\values-b+es+419\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8",
                         "startColumns": "0,0,0,0,0",

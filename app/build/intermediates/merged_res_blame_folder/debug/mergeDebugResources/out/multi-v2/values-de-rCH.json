@@ -4,7 +4,7 @@
             "outputFile": "com.example.indoornavigation.app-mergeDebugResources-78:/values-de-rCH/values-de-rCH.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\darsh\\.gradle\\caches\\8.13\\transforms\\5c34f3d9250826fc0dba1ac2cbfb67a6\\transformed\\core-1.40.0\\res\\values-de-rCH\\values.xml",
+                    "source": "C:\\Users\\darsh\\.gradle\\caches\\8.13\\transforms\\8b76ad2e2400c13a83cda9f2a79a09f5\\transformed\\core-1.40.0\\res\\values-de-rCH\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8",
                         "startColumns": "0,0,0,0,0",
