@@ -1,44 +1,31 @@
-# Indoor Navigation App
+# Real-Time Safety App (Phase 1)
 
-This is a comprehensive indoor navigation application for Android, built with Kotlin, Jetpack Compose, ARCore, and a suite of machine learning models for real-time scene understanding and hazard detection.
+This is a Phase-1 Android application that uses the device's camera to provide real-time AI safety alerts.
 
-## Project Structure
+## Features
 
-The project follows a clean architecture (MVVM) with a modular approach.
-
-- `app/src/main/java/com/example/indoornavigation`: Root package.
-  - `data`: Contains data sources, repositories, and models.
-    - `database`: Room database for offline map storage.
-    - `model`: Data models for the application.
-    - `repository`: Repositories to abstract data sources.
-  - `domain`: Contains use cases that encapsulate business logic.
-  - `ui`: Contains the UI layer, built with Jetpack Compose.
-    - `screens`: Composable screens for different parts of the app.
-    - `viewmodel`: ViewModels for each screen.
-    - `theme`: Theming for the app.
-  - `camerax`: Manages the camera feed.
-  - `ml`: Contains the machine learning models and inference code.
-  - `ar`: Manages the ARCore session and SLAM.
-  - `hazard`: Detects hazards by fusing ML and AR data.
-  - `navigation`: The navigation engine for pathfinding.
-  - `feedback`: Audio and haptic feedback engines.
-  - `map`: Tools for building and managing indoor maps and POIs.
-  - `service`: A foreground service for continuous navigation.
+- Live camera preview using CameraX.
+- Real-time object detection using a YOLOv8n TFLite model.
+- Approximate distance estimation using the ARCore Depth API.
+- A simple, rule-based hazard engine to trigger audio warnings.
+- Audio feedback using TextToSpeech.
+- A foreground service to ensure the app continues running in the background.
 
 ## How to Build
 
-1. **Clone the repository.**
-2. **Open the project in Android Studio.**
-3. **Replace the placeholder `app/google-services.json` with your own Firebase configuration file.**
-4. **Place your TensorFlow Lite models (`.tflite`) in the `app/src/main/assets` directory.**
-5. **Build and run the project.**
+1.  **Clone the repository.**
+2.  **Replace the placeholder model:** The file `app/src/main/assets/yolov8n.tflite` is a placeholder. You must replace it with a valid, INT8 quantized YOLOv8n TFLite model for the application to function correctly.
+3.  **Open the project in Android Studio.**
+4.  **Build and run the project.**
 
-## Dependencies
+## Architecture
 
-- **Jetpack Compose**: For the UI.
-- **ARCore**: For SLAM and depth sensing.
-- **CameraX**: For the camera feed.
-- **TensorFlow Lite**: For on-device machine learning.
-- **Hilt**: For dependency injection.
-- **Room**: For local database storage.
-- **Firebase**: For backend services (Firestore, Storage).
+The project follows a clean architecture with a simplified MVVM pattern, where the core logic resides in a foreground service.
+
+-   `service`: Contains the `ProcessingService`, which is the heart of the application.
+-   `camera`: Manages the CameraX pipeline.
+-   `ml`: Handles TFLite model loading and inference.
+-   `ar`: Manages the ARCore session and depth estimation.
+-   `domain`: Contains the hazard detection logic.
+-   `audio`: Manages the TextToSpeech engine.
+-   `ui`: Contains the Jetpack Compose UI and the ViewModel.

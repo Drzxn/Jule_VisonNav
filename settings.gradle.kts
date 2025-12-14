@@ -13,6 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "IndoorNavigation"
+rootProject.name = "RealTimeSafety"
 include(":app")
-
