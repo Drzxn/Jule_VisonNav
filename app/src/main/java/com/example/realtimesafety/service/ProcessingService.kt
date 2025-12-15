@@ -10,16 +10,20 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.core.app.NotificationCompat
 import com.example.realtimesafety.R
-import com.example.realtimesafety.audio.AudioEngine
+import com.example.realtimesafety.audio.AudioPriorityManager
 import com.example.realtimesafety.ar.DepthManager
 import com.example.realtimesafety.camera.CameraManager
 import com.example.realtimesafety.camera.ServiceLifecycleOwner
 import com.example.realtimesafety.data.UIState
-import com.example.realtimesafety.domain.HazardEngine
+import com.example.realtimesafety.domain.DepthSmoother
+import com.example.realtimesafety.domain.HazardEvaluator
+import com.example.realtimesafety.domain.MotionEstimator
+import com.example.realtimesafety.domain.ObjectTracker
 import com.example.realtimesafety.ml.ObjectDetector
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -27,8 +31,11 @@ class ProcessingService : Service() {
 
     @Inject lateinit var objectDetector: ObjectDetector
     @Inject lateinit var depthManager: DepthManager
-    @Inject lateinit var hazardEngine: HazardEngine
-    @Inject lateinit var audioEngine: AudioEngine
+    @Inject lateinit var objectTracker: ObjectTracker
+    @Inject lateinit var depthSmoother: DepthSmoother
+    @Inject lateinit var motionEstimator: MotionEstimator
+    @Inject lateinit var hazardEvaluator: HazardEvaluator
+    @Inject lateinit var audioPriorityManager: AudioPriorityManager
 
     private val binder = LocalBinder()
     private val _uiState = MutableStateFlow(UIState(emptyList(), 1, 1))
@@ -38,17 +45,28 @@ class ProcessingService : Service() {
 
     private lateinit var cameraManager: CameraManager
     private val serviceLifecycleOwner = ServiceLifecycleOwner()
+    private val isProcessing = AtomicBoolean(false)
+
     private val imageAnalyzer = ImageAnalysis.Analyzer { imageProxy ->
-        objectDetector.detect(imageProxy) { detections ->
-            _uiState.value = UIState(detections, imageProxy.width, imageProxy.height)
-            val frame = depthManager.update()
-            if (frame != null && detections.isNotEmpty()) {
-                val hazardResult = hazardEngine.checkForHazards(detections, frame, depthManager)
-                if (hazardResult != null) {
-                    val direction = audioEngine.getDirectionalCue(detections.first().boundingBox.centerX(), imageProxy.width)
-                    audioEngine.speak("${hazardResult.message} $direction", hazardResult.isEmergency)
+        if (isProcessing.compareAndSet(false, true)) {
+            objectDetector.detect(imageProxy) { detections ->
+                val trackedObjects = objectTracker.update(detections)
+                val frame = depthManager.update()
+                if (frame != null) {
+                    trackedObjects.forEach { track ->
+                        val distance = depthManager.getDepth(frame, track.boundingBox.centerX().toInt(), track.boundingBox.centerY().toInt())
+                        depthSmoother.smooth(track, distance)
+                        motionEstimator.estimate(track)
+                    }
                 }
+                val hazardEvents = hazardEvaluator.evaluate(trackedObjects)
+                audioPriorityManager.speak(hazardEvents)
+
+                _uiState.value = UIState(trackedObjects, imageProxy.width, imageProxy.height)
+                imageProxy.close()
+                isProcessing.set(false)
             }
+        } else {
             imageProxy.close()
         }
     }
@@ -88,6 +106,5 @@ class ProcessingService : Service() {
         serviceLifecycleOwner.onServiceDestroyed()
         cameraManager.shutDown()
         depthManager.close()
-        audioEngine.shutdown()
     }
 }

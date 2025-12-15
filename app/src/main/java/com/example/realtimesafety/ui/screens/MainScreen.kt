@@ -63,7 +63,7 @@ fun MainScreen(
         }
 
         Canvas(modifier = Modifier.fillMaxSize()) {
-            uiState.detections.forEach {
+            uiState.trackedObjects.forEach {
                 val transformedRect = coordinateTransformer.transform(it.boundingBox)
                 drawRect(
                     color = Color.Red,
